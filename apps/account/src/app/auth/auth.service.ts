@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/entities/user.entity';
 import { UserRepository } from '../user/repositories/user.repository';
-import { RegisterDto } from './dto/register.dto';
+import { AccountLogin, AccountRegister } from '@nest-monorepo/contracts'
 
 export enum AuthServiceErrors {
   USER_ALREADY_EXISTS = 'User already exists',
@@ -17,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(dto: RegisterDto) {
+  async register(dto: AccountRegister.Request): Promise<AccountRegister.Response> {
     const { email, password, displayName } = dto;
 
     const oldUser = await this.userRepository.findUser(email);
@@ -54,7 +54,7 @@ export class AuthService {
     }
   }
 
-  async login(id: string) {
+  async login(id: string): Promise<AccountLogin.Response> {
     const accessToken = await this.jwtService.signAsync(id);
 
     return {
