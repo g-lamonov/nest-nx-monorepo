@@ -4,8 +4,6 @@ import { JwtAuthGuard } from '../guards/jwt.guard';
 
 @Controller('users')
 export class UserController {
-  constructor() {}
-
   // TODO
   @UseGuards(JwtAuthGuard)
   @Post('info')
