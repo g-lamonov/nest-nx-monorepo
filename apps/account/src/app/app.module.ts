@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { getMongoConfig } from './config/mongo.config';
 
 @Module({
   imports: [
@@ -10,7 +12,8 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: 'envs/.account.env'
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    MongooseModule.forRootAsync(getMongoConfig())
   ],
 })
 export class AppModule {}
