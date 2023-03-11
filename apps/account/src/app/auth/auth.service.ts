@@ -50,7 +50,7 @@ export class AuthService {
       throw new Error(AuthServiceErrors.INCORRECT_LOGIN_OR_PASSWORD);
 
     return {
-      id: user._id,
+      id: user._id.toString(),
     }
   }
 
