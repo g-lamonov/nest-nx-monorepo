@@ -1,4 +1,5 @@
-import { IUser, UserRole, IUserCourse, PurchaseState, } from "@nest-monorepo/interfaces";
+import { AccountChangedCourse } from "@nest-monorepo/contracts";
+import { IUser, UserRole, IUserCourse, PurchaseState, IDomainEvent, } from "@nest-monorepo/interfaces";
 import { genSalt, hash, compare } from "bcryptjs";
 
 export enum UserEntityErrors {
@@ -11,7 +12,8 @@ export class UserEntity implements IUser {
   email: string;
   passwordHash: string;
   role: UserRole;
-  courses: IUserCourse[]
+  courses: IUserCourse[];
+  events: IDomainEvent[] = [];
 
   constructor(user: Partial<IUser>) {
     this._id = user._id;
@@ -42,6 +44,14 @@ export class UserEntity implements IUser {
         course.purchaseState = state;
 
       return course;
+    })
+
+    this.events.push({
+      topic: AccountChangedCourse.topic,
+      data: {
+        userId: this._id,
+        courseId,
+      }
     })
   }
 
