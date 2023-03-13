@@ -1,6 +1,7 @@
 import { AccountUserCourses, AccountUserInfo } from '@nest-monorepo/contracts';
 import { Body, Controller, } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
+import { UserEntity } from './entities/user.entity';
 import { UserRepository } from './repositories/user.repository';
 
 @Controller()
@@ -13,8 +14,10 @@ export class UserQueries {
   @RMQRoute(AccountUserInfo.topic)
   async userInfo(@Body() dto: AccountUserInfo.Request): Promise<AccountUserInfo.Response> {
     const user = await this.userRepository.findUserById(dto.id);
+    const profile = new UserEntity(user).getPublicProfile();
+
     return {
-      user,
+      profile,
     };
   }
 
