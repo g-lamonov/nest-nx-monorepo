@@ -1,8 +1,8 @@
 import { PurchaseState } from "@nest-monorepo/interfaces";
 import { RMQService } from "nestjs-rmq";
-import { UserEntity } from "../entities/user.entity";
+import { UserEntity } from "../../entities/user.entity";
 import { BuyCourseSagaState } from "./buy-course.state";
-import { BuyCourseSagaStateStarted } from "./buy-course.steps";
+import { BuyCourseSagaStatePurchased, BuyCourseSagaStateWaitingForPayment, BuyCourseSagaStateStarted, BuyCourseSagaStateCancelled } from "./buy-course.steps";
 
 export class BuyCourseSaga {
   private state: BuyCourseSagaState;
@@ -15,18 +15,20 @@ export class BuyCourseSaga {
         this.state = new BuyCourseSagaStateStarted();
         break;
       case PurchaseState.WaitingForPayment:
-        // TODO
+        this.state = new BuyCourseSagaStateWaitingForPayment();
         break;
       case PurchaseState.Purchased:
-        // TODO
+        this.state = new BuyCourseSagaStatePurchased();
         break;
       case PurchaseState.Cancelled:
-        // TODO
+        this.state = new BuyCourseSagaStateCancelled();
         break;
-      }
+      default:
+        throw new Error(`${state} not implemented`);
+    }
 
-      this.state.setContext(this);
-      this.user.setCourseStatus(courseId, state);
+    this.state.setContext(this);
+    this.user.setCourseStatus(courseId, state);
   }
 
   getState() {
