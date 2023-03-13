@@ -15,8 +15,8 @@ export class UserRepository {
     return newUser.save();
   }
 
-  async updateUser(_id: string, userData: UserEntity) {
-    return this.userModel.updateOne({ _id }, { $set: userData }).exec();
+  async updateUser(userData: UserEntity) {
+    return this.userModel.updateOne({ _id: userData._id }, { $set: userData }).exec();
   }
 
   async findUser(email: string) {
