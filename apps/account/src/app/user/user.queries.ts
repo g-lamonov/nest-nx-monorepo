@@ -6,7 +6,6 @@ import { UserRepository } from './repositories/user.repository';
 @Controller()
 export class UserQueries {
   constructor(
-
     private readonly userRepository: UserRepository
   ) {}
 
