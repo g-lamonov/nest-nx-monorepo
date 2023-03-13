@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@nest-monorepo/interfaces";
 import { UserEntity } from "../../entities/user.entity";
 import { BuyCourseSaga } from "./buy-course.saga";
 
@@ -24,6 +25,6 @@ export abstract class BuyCourseSagaState {
   }
 
   public abstract pay(): Promise<{ paymentLink?: string, user: UserEntity }>;
-  public abstract checkPayment(): Promise<{ paymentLink?: string, user: UserEntity }>;
+  public abstract checkPayment(): Promise<{ paymentLink?: string, user: UserEntity, status: PaymentStatus }>;
   public abstract cancel(): Promise<{ paymentLink?: string, user: UserEntity }>;
 }

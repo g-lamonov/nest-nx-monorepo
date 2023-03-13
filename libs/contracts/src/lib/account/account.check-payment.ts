@@ -1,4 +1,4 @@
-import { PurchaseState } from '@nest-monorepo/interfaces';
+import { PaymentStatus } from '@nest-monorepo/interfaces';
 import { IsString, } from 'class-validator';
 
 export namespace AccountCheckPayment {
@@ -13,6 +13,6 @@ export namespace AccountCheckPayment {
   }
 
   export class Response {
-    status: PurchaseState;
+    status: PaymentStatus;
   }
 }

@@ -1,5 +1,5 @@
 import { CourseGetCourse, PaymentGenerateLink } from "@nest-monorepo/contracts";
-import { PurchaseState } from "@nest-monorepo/interfaces";
+import { PaymentStatus, PurchaseState } from "@nest-monorepo/interfaces";
 import { UserEntity } from "../../../entities/user.entity";
 import { BuyCourseSagaErrors, BuyCourseSagaState } from "../buy-course.state";
 
@@ -32,7 +32,7 @@ export class BuyCourseSagaStateStarted extends BuyCourseSagaState {
       user: this.saga.user,
     }
   }
-  public checkPayment(): Promise<{ paymentLink: string; user: UserEntity; }> {
+  public checkPayment(): Promise<{ paymentLink: string; user: UserEntity; status: PaymentStatus; }> {
     throw new Error(BuyCourseSagaErrors.UNABLE_TO_CHECK_PAYMENT_THAT_HAS_NOT_STARTED_YET);
   }
   public async cancel(): Promise<{ paymentLink?: string; user: UserEntity; }> {

@@ -1,4 +1,4 @@
-import { PurchaseState } from "@nest-monorepo/interfaces";
+import { PaymentStatus, PurchaseState } from "@nest-monorepo/interfaces";
 import { UserEntity } from "../../../entities/user.entity";
 import { BuyCourseSagaErrors, BuyCourseSagaState } from "../buy-course.state";
 
@@ -8,7 +8,7 @@ export class BuyCourseSagaStateCancelled extends BuyCourseSagaState {
     return this.saga.getState().pay();
   }
 
-  public async checkPayment(): Promise<{ paymentLink?: string; user: UserEntity; }> {
+  public async checkPayment(): Promise<{ paymentLink?: string; user: UserEntity; status: PaymentStatus; }> {
     throw new Error(BuyCourseSagaErrors.CANNOT_CHECK_PAYMENT_FOR_CANCELLED_COURSE);
   }
 
